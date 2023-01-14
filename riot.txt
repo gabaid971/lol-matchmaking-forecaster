@@ -1,0 +1,21 @@
+autofill
+dernieres games (hot streak, lose streak)
+date derniere game
+
+features:
+kda
+winrate
+gpm
+cs
+role
+autofill
+lose streak
+winstreak
+target:
+which team win?
+
+note joueur*game --! game --! evaluer pour chaque joueur si il atterit dans des games gagnantes ou perdantes
+
+test de series chronologiques:
+portmanteau : ljung box
+dickey fuller
