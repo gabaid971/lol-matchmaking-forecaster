@@ -1,4 +1,5 @@
 import random
+from params import riot_params
 from sortedcontainers import SortedList
 import arrow
 
@@ -58,6 +59,6 @@ def collect_matches(initial_summoner_name, region, nb_of_games):
 
 
 if __name__ == "__main__":
-    set_riot_api_key("RGAPI-6a92f2a7-9ffc-41c8-a2e6-da45a1d1d8f8")
+    set_riot_api_key(riot_params())
     match_ids = collect_matches("Ckronikkss", "EUW", 30)
     print(len(match_ids))

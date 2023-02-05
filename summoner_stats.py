@@ -1,5 +1,6 @@
 from cassiopeia.core import Summoner, MatchHistory, LeagueSummonerEntries, LeagueEntries
 from cassiopeia import set_riot_api_key, Patch
+from params import riot_params
 from utils import RomanNumeralToDecimal
 import arrow
 
@@ -38,9 +39,35 @@ def get_summoner_match_history(summoner, patch):
     )
     return match_history
 
-#MatchHistory(continent=self.region.continent, puuid=self.puuid)
+
+def get_summoner_historical_features(summoner, patch, max_matches=None):
+    match_history = get_summoner_match_history(summoner, patch)
+    total_matches = len(match_history) if max_matches is None else max_matches
+    total_kills = 0
+    total_deaths = 0
+    total_assists = 0
+    total_gold = 0
+    total_time = 0
+    total_cs = 0
+    count = 0
+    for match in match_history:
+        if (max_matches is None) or (count < max_matches):
+            participant = match.participants[summoner]
+            total_kills += participant.stats.kills
+            total_deaths += participant.stats.deaths
+            total_assists += participant.stats.assists
+            total_gold += participant.stats.gold_earned
+            total_time += participant.stats.time_played
+            total_cs += participant.stats.total_minions_killed
+            count += 1
+    mean_kda = (total_kills + total_assists) / total_deaths
+    mean_gpm = total_gold / (total_time / 60)
+    mean_cs = total_cs / total_matches
+    return mean_kda, mean_gpm, mean_cs
+
+
 if __name__ == "__main__":
-    set_riot_api_key("RGAPI-1078aab9-7d07-4ab4-ac8a-6fc5ddb5a6fc")
+    set_riot_api_key(riot_params())
     summoner_name = "Garenoir"
     region = "EUW"
     patch = Patch.from_str("13.1", region=region)
@@ -48,4 +75,5 @@ if __name__ == "__main__":
     rank = get_summoner_rank(summoner)
     winrate = get_summoner_winrate(summoner)
     match_history = get_summoner_match_history(summoner, patch)
+    mean_kda = get_summoner_mean_kda(summoner, patch)
     print(0)

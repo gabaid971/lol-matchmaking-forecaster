@@ -3,12 +3,12 @@ dernieres games (hot streak, lose streak)
 date derniere game
 
 features:
-kda
+kda (avg)
 winrate
-gpm
-cs
+gpm (avg)
+cs (avg)
 role
-autofill
+autofill (avg)
 lose streak
 winstreak
 target:
@@ -19,3 +19,13 @@ note joueur*game --! game --! evaluer pour chaque joueur si il atterit dans des 
 test de series chronologiques:
 portmanteau : ljung box
 dickey fuller
+
+
+1 GAME: 
+    J1: W W L W ...
+    J2: L L L L ...
+    ...
+    J10: W W W W ...
+
+1 player:
+W L W L L 
