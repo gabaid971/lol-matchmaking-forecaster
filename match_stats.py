@@ -33,7 +33,9 @@ def is_participant_autofill(position, team_position_frequency):
 
 
 def features(match):
-    patch = Patch.from_str("13.1", region="EUW")
+     #patch = Patch.from_str("13.1", region="EUW")
+    start = match.patch.start
+    end = match.start
     ranks = []
     winrates = []
     mean_kdas = []
@@ -46,7 +48,7 @@ def features(match):
         ranks.append(get_summoner_rank(summoner))
         winrates.append(get_summoner_winrate(summoner))
         #match_history = get_summoner_match_history(summoner, patch)
-        mean_kda, mean_gpm, mean_cs, team_position_frequency = get_summoner_historical_features(summoner, patch, 6)
+        mean_kda, mean_gpm, mean_cs, team_position_frequency = get_summoner_historical_features(summoner, start, end, 6)
         mean_kdas.append(mean_kda)
         mean_gpms.append(mean_gpm)
         mean_css.append(mean_cs)
@@ -66,6 +68,6 @@ def add_match(match):
 
 if __name__ == "__main__":
     set_riot_api_key(riot_params())
-    match = Match(id=6229757149, region="EUW")
+    match = Match(id=6268365373, region="EUW")
     ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win = features(match)
     print(0)

@@ -26,22 +26,19 @@ def get_summoner_rank(summoner):
         return 0
 
 
-def get_summoner_match_history(summoner, patch):
-    end_time = patch.end
-    if end_time is None:
-        end_time = arrow.now()
+def get_summoner_match_history(summoner, start, end):
     match_history = MatchHistory(
         puuid=summoner.puuid,
         continent="EUROPE",
-        start_time=patch.start,
-        end_time=end_time,
+        start_time=start,
+        end_time=end,
         queue="RANKED_SOLO_5x5",    
     )
     return match_history
 
 
-def get_summoner_historical_features(summoner, patch, max_matches=None):
-    match_history = get_summoner_match_history(summoner, patch)
+def get_summoner_historical_features(summoner, start, end, max_matches=None):
+    match_history = get_summoner_match_history(summoner, start, end)
     total_matches = len(match_history) if max_matches is None else min(len(match_history), max_matches)
     total_kills = 0
     total_deaths = 0
@@ -80,9 +77,13 @@ if __name__ == "__main__":
     summoner_name = "Garenoir"
     region = "EUW"
     patch = Patch.from_str("13.1", region=region)
+    end_time = patch.end
+    if end_time is None:
+        end_time = arrow.now()
+    start_time = patch.start
     summoner = Summoner(name=summoner_name, region=region)
     rank = get_summoner_rank(summoner)
     winrate = get_summoner_winrate(summoner)
-    match_history = get_summoner_match_history(summoner, patch)
+    match_history = get_summoner_match_history(summoner, start_time, end_time)
     mean_kda, mean_gpm, mean_cs = get_summoner_historical_features(summoner, patch)
     print(0)
