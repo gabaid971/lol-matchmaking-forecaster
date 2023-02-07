@@ -1,7 +1,7 @@
 from cassiopeia.core import Summoner, MatchHistory, LeagueSummonerEntries, LeagueEntries
 from cassiopeia import set_riot_api_key, Patch
 from params import riot_params
-from utils import RomanNumeralToDecimal
+from utils import RomanNumeralToDecimal, team_position_frequency
 import arrow
 
 
@@ -42,13 +42,15 @@ def get_summoner_match_history(summoner, patch):
 
 def get_summoner_historical_features(summoner, patch, max_matches=None):
     match_history = get_summoner_match_history(summoner, patch)
-    total_matches = len(match_history) if max_matches is None else max_matches
+    total_matches = len(match_history) if max_matches is None else min(len(match_history), max_matches)
     total_kills = 0
     total_deaths = 0
     total_assists = 0
     total_gold = 0
     total_time = 0
     total_cs = 0
+    #total_damages = 0
+    team_positions = []
     count = 0
     for match in match_history:
         if (max_matches is None) or (count < max_matches):
@@ -59,11 +61,18 @@ def get_summoner_historical_features(summoner, patch, max_matches=None):
             total_gold += participant.stats.gold_earned
             total_time += participant.stats.time_played
             total_cs += participant.stats.total_minions_killed
+            #total_damages += participant.stats.total_damage_dealt
+            team_positions.append(participant.team_position.name)
             count += 1
-    mean_kda = (total_kills + total_assists) / total_deaths
+    if total_deaths == 0:
+        mean_kda = (total_kills + total_assists)
+    else:
+        mean_kda = (total_kills + total_assists) / total_deaths
     mean_gpm = total_gold / (total_time / 60)
     mean_cs = total_cs / total_matches
-    return mean_kda, mean_gpm, mean_cs
+    #mean_damages = total_damages / total_damages
+    team_position_frequencies = team_position_frequency(team_positions, max_matches)
+    return mean_kda, mean_gpm, mean_cs, team_position_frequencies
 
 
 if __name__ == "__main__":
@@ -75,5 +84,5 @@ if __name__ == "__main__":
     rank = get_summoner_rank(summoner)
     winrate = get_summoner_winrate(summoner)
     match_history = get_summoner_match_history(summoner, patch)
-    mean_kda = get_summoner_mean_kda(summoner, patch)
+    mean_kda, mean_gpm, mean_cs = get_summoner_historical_features(summoner, patch)
     print(0)

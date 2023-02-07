@@ -1,3 +1,6 @@
+import collections
+
+
 tallies = {
     'I': 1,
     'V': 5,
@@ -7,6 +10,7 @@ tallies = {
     'D': 500,
     'M': 1000,
 }
+
 
 def RomanNumeralToDecimal(romanNumeral):
     sum = 0
@@ -19,3 +23,19 @@ def RomanNumeralToDecimal(romanNumeral):
             sum += tallies[left]
     sum += tallies[romanNumeral[-1]]
     return sum
+
+
+team_positions = {
+    'top_lane' : 1,
+    'mid_lane' : 2,
+    'bot_lane' : 3,
+    'utility' : 4,
+    'jungle' : 5
+}
+
+
+def team_position_frequency(team_positions, max_matches):
+    frequency = dict(collections.Counter(team_positions))
+    frequency.update((x, y / max_matches) for x, y in frequency.items())
+    return frequency
+
