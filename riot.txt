@@ -12,7 +12,7 @@ autofill (avg)
 lose streak
 winstreak
 target:
-which team win?
+which team wins?
 
 note joueur*game --! game --! evaluer pour chaque joueur si il atterit dans des games gagnantes ou perdantes
 

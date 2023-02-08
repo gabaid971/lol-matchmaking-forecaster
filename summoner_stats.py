@@ -1,6 +1,6 @@
-from cassiopeia.core import Summoner, MatchHistory, LeagueSummonerEntries, LeagueEntries
 from cassiopeia import set_riot_api_key, Patch
 from params import riot_params
+from cassiopeia.core import Summoner, MatchHistory
 from utils import RomanNumeralToDecimal, team_position_frequency
 import arrow
 

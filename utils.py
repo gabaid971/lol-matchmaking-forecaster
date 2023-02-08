@@ -25,15 +25,6 @@ def RomanNumeralToDecimal(romanNumeral):
     return sum
 
 
-team_positions = {
-    'top_lane' : 1,
-    'mid_lane' : 2,
-    'bot_lane' : 3,
-    'utility' : 4,
-    'jungle' : 5
-}
-
-
 def team_position_frequency(team_positions, max_matches):
     frequency = dict(collections.Counter(team_positions))
     frequency.update((x, y / max_matches) for x, y in frequency.items())
