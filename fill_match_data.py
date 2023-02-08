@@ -2,6 +2,7 @@ from cassiopeia import set_riot_api_key
 from params import riot_params
 from cassiopeia.core import Match
 from match_stats import features
+from collect_matches import collect_matches
 import csv
 
 
@@ -37,9 +38,17 @@ def add_match(match):
         file.close()
 
 
+def add_matches(summoner_name, nb_of_games):
+    match_ids = collect_matches(summoner_name, "EUW", nb_of_games)
+    for match_id in match_ids:
+        match = Match(id=match_id, region="EUW")
+        add_match(match)
+
+
 if __name__ == "__main__":
     columns = first_line()
     set_riot_api_key(riot_params())
-    match = Match(id=6268365373, region="EUW")
-    add_match(match)
+    #match = Match(id=6269515956, region="EUW")
+    #add_match(match)
+    add_matches("crayder", 200)
     print(0)

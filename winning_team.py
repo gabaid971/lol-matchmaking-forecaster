@@ -1,4 +1,7 @@
 import pandas as pd
+import lazypredict
+from lazypredict.Supervised import LazyClassifier, LazyRegressor
+from sklearn.model_selection import train_test_split
 
 
 def team_features(df):
@@ -17,7 +20,23 @@ def team_features(df):
     return df
 
 
+def train_models(df):
+    X = df[["avg_rank_team_1", "avg_rank_team_2", "avg_winrate_team_1",
+        "avg_winrate_team_2", "avg_kda_team_1", "avg_kda_team_2",
+            "avg_gpm_team_1", "avg_gpm_team_2", "avg_cs_team_1",
+                "avg_cs_team_2", "nb_autofill_team_1", "nb_autofill_team_2"]]
+    y= df[["win"]]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=.5, random_state =123)
+
+    clf = LazyClassifier(verbose=0, ignore_warnings=True, custom_metric=None)
+    models, predictions = clf.fit(X_train, X_test, y_train, y_test)
+    return models, predictions
+
+
 if __name__ == "__main__":
     df = pd.read_csv("match_data.csv")
     df = team_features(df)
+    models, predictions = train_models(df)
+    print(predictions)
     print(0)

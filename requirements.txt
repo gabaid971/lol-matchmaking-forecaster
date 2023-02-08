@@ -1,0 +1,5 @@
+lazypredict
+pandas
+numpy
+cassiopeia
+sklearn

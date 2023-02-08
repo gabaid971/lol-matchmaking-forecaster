@@ -1,17 +1,21 @@
 from cassiopeia import set_riot_api_key
+from numpy import NaN
 from params import riot_params
 from cassiopeia.core import Match
 from summoner_stats import get_summoner_historical_features, get_summoner_winrate, get_summoner_rank
 
 
 def is_participant_autofill(position, team_position_frequency):
-    if position not in team_position_frequency.keys():
-        return True
+    if team_position_frequency is NaN:
+        return NaN
     else:
-        if team_position_frequency[position] > 0.2:
-            return False
-        else:
+        if position not in team_position_frequency.keys():
             return True
+        else:
+            if team_position_frequency[position] > 0.2:
+                return False
+            else:
+                return True
     
 
 def winning_team(match):

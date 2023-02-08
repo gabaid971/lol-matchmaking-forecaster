@@ -4,7 +4,7 @@ from sortedcontainers import SortedList
 import arrow
 
 from cassiopeia.core import Summoner, MatchHistory, Match
-from cassiopeia import Queue, Patch, set_riot_api_key
+from cassiopeia import Patch, set_riot_api_key
 
 
 def filter_match_history(summoner, patch):
@@ -23,7 +23,7 @@ def filter_match_history(summoner, patch):
     
 def collect_matches(initial_summoner_name, region, nb_of_games):
     summoner = Summoner(name=initial_summoner_name, region=region)
-    patch = Patch.from_str("12.22", region=region)
+    patch = Patch.from_str("13.1", region=region)
 
     unpulled_summoner_ids = SortedList([summoner.id])
     pulled_summoner_ids = SortedList()
@@ -60,5 +60,5 @@ def collect_matches(initial_summoner_name, region, nb_of_games):
 
 if __name__ == "__main__":
     set_riot_api_key(riot_params())
-    match_ids = collect_matches("Ckronikkss", "EUW", 30)
+    match_ids = collect_matches("crayder", "EUW", 30)
     print(len(match_ids))
