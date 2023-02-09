@@ -5,8 +5,8 @@ from sortedcontainers import SortedList
 from params import riot_params, starting_match_ids
 from cassiopeia.core import Match
 from match_stats import features
-import requests
-import threading
+#import threading
+from multiprocessing import Pool
 import csv
 
 
@@ -68,9 +68,11 @@ def add_matches(api_key, match_id, nb_of_games):
 
 if __name__ == "__main__":
     columns = first_line()
-    thread1 = threading.Thread(target=add_matches, args=(riot_params()[0], starting_match_ids()[0], 10))
-    thread2 = threading.Thread(target=add_matches, args=(riot_params()[1], starting_match_ids()[1], 10))
-    thread1.start()
-    thread2.start()
-    thread1.join()
-    thread2.join()
+    #thread1 = threading.Thread(target=add_matches, args=(riot_params()[0], starting_match_ids()[0], 10))
+    #thread2 = threading.Thread(target=add_matches, args=(riot_params()[1], starting_match_ids()[1], 10))
+    #thread1.start()
+    #thread2.start()
+    #thread1.join()
+    #thread2.join()
+    with Pool() as pool:
+        processus = pool.starmap(add_matches, [(riot_params()[i], starting_match_ids()[i], 10) for i in range(2)])
