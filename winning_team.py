@@ -39,4 +39,3 @@ if __name__ == "__main__":
     df = team_features(df)
     models, predictions = train_models(df)
     print(predictions)
-    print(0)

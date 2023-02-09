@@ -1,13 +1,15 @@
+import random
+import time
 from cassiopeia import set_riot_api_key
+from sortedcontainers import SortedList
 from params import riot_params
 from cassiopeia.core import Match
 from match_stats import features
-from collect_matches import collect_matches
 import csv
 
 
 def first_line():
-    first_line = ''
+    first_line = 'match_id'
     for i in range(1, 11):
         rank = 'rank_player_' + str(i) + ','
         first_line += rank
@@ -31,24 +33,38 @@ def first_line():
 
 
 def add_match(match):
-    ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win = features(match)
+    ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win, match_ids = features(match, SortedList([match.id]))
     with open('match_data.csv', 'a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(ranks + winrates + mean_kdas + mean_gpms + mean_css + autofills + [win]) 
+        writer.writerow([match.id] + ranks + winrates + mean_kdas + mean_gpms + mean_css + autofills + [win]) 
         file.close()
 
 
-def add_matches(summoner_name, nb_of_games):
-    match_ids = collect_matches(summoner_name, "EUW", nb_of_games)
-    for match_id in match_ids:
+def add_matches(match, nb_of_games):
+    match_ids = SortedList([match.id])
+    start = time.time()
+    for i in range(nb_of_games):
+        before = time.time()
+        match_id = random.choice(match_ids)
         match = Match(id=match_id, region="EUW")
-        add_match(match)
+        ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win, match_ids = features(match, match_ids)
+        row = [match_id] + ranks + winrates + mean_kdas + mean_gpms + mean_css + autofills + [win]
+        match_ids.remove(match_id)
+        with open('match_data.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(row) 
+            file.close()
+        after = time.time()
+        print("This match has taken :")
+        print(after - before)
+        print("From the start :")
+        print(after - start)
+        print(str(i+1) + " matches saved")
 
 
 if __name__ == "__main__":
     columns = first_line()
     set_riot_api_key(riot_params())
-    #match = Match(id=6269515956, region="EUW")
+    match = Match(id=6269515956, region="EUW")
     #add_match(match)
-    add_matches("crayder", 200)
-    print(0)
+    add_matches(match, 100)
