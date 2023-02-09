@@ -38,4 +38,4 @@ if __name__ == "__main__":
     df = pd.read_csv("match_data.csv")
     df = team_features(df)
     models, predictions = train_models(df)
-    print(predictions)
+    print(models)
