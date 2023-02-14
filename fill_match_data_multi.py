@@ -68,11 +68,5 @@ def add_matches(api_key, match_id, nb_of_games):
 
 if __name__ == "__main__":
     columns = first_line()
-    #thread1 = threading.Thread(target=add_matches, args=(riot_params()[0], starting_match_ids()[0], 10))
-    #thread2 = threading.Thread(target=add_matches, args=(riot_params()[1], starting_match_ids()[1], 10))
-    #thread1.start()
-    #thread2.start()
-    #thread1.join()
-    #thread2.join()
     with Pool() as pool:
         processus = pool.starmap(add_matches, [(riot_params()[i], starting_match_ids()[i], 1000) for i in range(10)])

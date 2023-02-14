@@ -81,7 +81,7 @@ def get_summoner_historical_features(summoner, start, end, match_ids, max_matche
 
 
 if __name__ == "__main__":
-    set_riot_api_key(riot_params())
+    set_riot_api_key(riot_params()[0])
     summoner_name = "Garenoir"
     region = "EUW"
     patch = Patch.from_str("13.1", region=region)
