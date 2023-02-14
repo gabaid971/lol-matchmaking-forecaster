@@ -2,7 +2,7 @@ import random
 import time
 from cassiopeia import set_riot_api_key
 from sortedcontainers import SortedList
-from params import riot_params
+from params import riot_params, starting_match_ids
 from cassiopeia.core import Match
 from match_stats import features
 import csv
@@ -64,7 +64,7 @@ def add_matches(match, nb_of_games):
 
 if __name__ == "__main__":
     columns = first_line()
-    set_riot_api_key(riot_params()[0])
-    match = Match(id=6269515956, region="EUW")
+    set_riot_api_key(riot_params()[8])
+    match = Match(id=starting_match_ids()[8], region="EUW")
     #add_match(match)
-    add_matches(match, 100)
+    add_matches(match, 10)

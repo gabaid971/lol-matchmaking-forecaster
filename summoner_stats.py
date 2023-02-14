@@ -26,7 +26,7 @@ def get_summoner_rank(summoner):
         tier, division = tier_conversion[league.tier.value], RomanNumeralToDecimal(league.division.value)
         return tier + (4 - division)
     else:
-        return 0
+        return 11
 
 
 def get_summoner_match_history(summoner, start, end):
@@ -55,6 +55,7 @@ def get_summoner_historical_features(summoner, start, end, match_ids, max_matche
         for match in match_history:
             if (max_matches is None) or (count < total_matches):
                 if match.duration > datetime.timedelta(seconds=500):
+                    print(match.patch)
                     match_ids.add(match.id)
                     participant = match.participants[summoner]
                     total_kills += participant.stats.kills

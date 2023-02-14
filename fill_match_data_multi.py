@@ -75,4 +75,4 @@ if __name__ == "__main__":
     #thread1.join()
     #thread2.join()
     with Pool() as pool:
-        processus = pool.starmap(add_matches, [(riot_params()[i], starting_match_ids()[i], 10) for i in range(2)])
+        processus = pool.starmap(add_matches, [(riot_params()[i], starting_match_ids()[i], 1000) for i in range(10)])
