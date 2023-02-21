@@ -3,3 +3,4 @@ pandas
 numpy
 cassiopeia
 sklearn
+statsmodels
