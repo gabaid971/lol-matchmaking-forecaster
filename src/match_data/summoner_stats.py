@@ -10,6 +10,7 @@ from src.utils import RomanNumeralToDecimal, team_position_frequency
 import arrow
 
 
+
 def get_summoner_winrate(summoner):
     if Queue.ranked_solo_fives in summoner.ranks.keys():
         league = next(x for x in summoner.league_entries if x.queue == Queue.ranked_solo_fives)
