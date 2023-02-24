@@ -1,10 +1,12 @@
+import sys
+sys.path.insert(0, '')
 import random
 import time
 from cassiopeia import set_riot_api_key
 from sortedcontainers import SortedList
-from params import riot_params, starting_match_ids
+from src.match_data.params import riot_params, starting_match_ids
 from cassiopeia.core import Match
-from match_stats import features
+from src.match_data.match_stats import features
 #import threading
 from multiprocessing import Pool
 import csv
@@ -36,7 +38,7 @@ def first_line():
 
 def add_match(match):
     ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win, match_ids = features(match, SortedList([match.id]))
-    with open('match_data.csv', 'a', newline='') as file:
+    with open('saved_data/match_data.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([match.id] + ranks + winrates + mean_kdas + mean_gpms + mean_css + autofills + [win]) 
         file.close()
@@ -54,7 +56,7 @@ def add_matches(api_key, match_id, nb_of_games):
         ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win, match_ids = features(match, match_ids)
         row = [match_id] + ranks + winrates + mean_kdas + mean_gpms + mean_css + autofills + [win]
         match_ids.remove(match_id)
-        with open('match_data.csv', 'a', newline='') as file:
+        with open('saved_data/match_data.csv', 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(row) 
             file.close()

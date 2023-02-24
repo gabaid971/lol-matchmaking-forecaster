@@ -1,10 +1,12 @@
+import sys
+sys.path.insert(0, '')
 import datetime
 from cassiopeia import set_riot_api_key, Patch, Queue
 from numpy import NaN
 from sortedcontainers import SortedList
-from params import riot_params
+from src.match_data.params import riot_params
 from cassiopeia.core import Summoner, MatchHistory
-from utils import RomanNumeralToDecimal, team_position_frequency
+from src.utils import RomanNumeralToDecimal, team_position_frequency
 import arrow
 
 
@@ -55,7 +57,6 @@ def get_summoner_historical_features(summoner, start, end, match_ids, max_matche
         for match in match_history:
             if (max_matches is None) or (count < total_matches):
                 if match.duration > datetime.timedelta(seconds=500):
-                    print(match.patch)
                     match_ids.add(match.id)
                     participant = match.participants[summoner]
                     total_kills += participant.stats.kills

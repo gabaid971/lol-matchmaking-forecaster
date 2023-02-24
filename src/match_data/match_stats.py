@@ -1,9 +1,11 @@
+import sys
+sys.path.insert(0, '')
 from cassiopeia import set_riot_api_key
 from numpy import NaN
 from sortedcontainers import SortedList
-from params import riot_params
+from src.match_data.params import riot_params
 from cassiopeia.core import Match
-from summoner_stats import get_summoner_historical_features, get_summoner_winrate, get_summoner_rank
+from src.match_data.summoner_stats import get_summoner_historical_features, get_summoner_winrate, get_summoner_rank
 
 
 def is_participant_autofill(position, team_position_frequency):
@@ -50,6 +52,6 @@ def features(match, match_ids):
 
 
 if __name__ == "__main__":
-    set_riot_api_key(riot_params())
+    set_riot_api_key(riot_params()[0])
     match = Match(id=6268365373, region="EUW")
     ranks, winrates, mean_kdas, mean_gpms, mean_css, autofills, win, match_ids = features(match, SortedList([match.id]))

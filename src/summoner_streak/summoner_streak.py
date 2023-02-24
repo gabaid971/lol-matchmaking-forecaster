@@ -1,12 +1,13 @@
+import sys
+sys.path.insert(0, '')
 import pickle
-import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from cassiopeia import set_riot_api_key, Patch
 from cassiopeia.core import Summoner
-from match_stats import winning_team
-from params import riot_params
-from summoner_stats import get_summoner_match_history, get_summoner_rank, get_summoner_winrate
+from src.match_data.match_stats import winning_team
+from src.match_data.params import riot_params
+from src.match_data.summoner_stats import get_summoner_match_history, get_summoner_rank, get_summoner_winrate
 
 
 def features_low(match, summoner):
@@ -47,7 +48,7 @@ def history_outcomes(summoner, start, end):
 
 
 def predicted_outcome(df):
-    filename = 'finalized_model.sav'
+    filename = 'saved_data/finalized_model.sav'
     loaded_model = pickle.load(open(filename, 'rb'))
     predicted_win = loaded_model.predict_proba(df[["avg_rank_blue_team", "avg_rank_red_team", "avg_winrate_blue_team", "avg_winrate_red_team"]])
     df["predicted_win"] = [proba[1] - proba[0] for proba in predicted_win]
@@ -68,6 +69,6 @@ def win_history(summoner_name, patch_name):
 
 
 if __name__=="__main__":
-    summoner_name = "Garenoir"
+    summoner_name = "1vs9 GOD FIDDLE"
     patch_name = "13.1"
     df = win_history(summoner_name, patch_name)
