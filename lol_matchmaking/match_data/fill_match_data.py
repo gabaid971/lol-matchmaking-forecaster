@@ -1,12 +1,10 @@
-import sys
-sys.path.insert(0, '')
 import random
 import time
 from cassiopeia import set_riot_api_key
 from sortedcontainers import SortedList
-from src.match_data.params import riot_params, starting_match_ids
+from lol_matchmaking.match_data.params import riot_params, starting_match_ids
 from cassiopeia.core import Match
-from src.match_data.match_stats import features
+from lol_matchmaking.match_data.match_stats import features
 import csv
 
 

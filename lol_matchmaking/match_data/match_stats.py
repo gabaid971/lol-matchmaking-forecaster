@@ -1,11 +1,9 @@
-import sys
-sys.path.insert(0, '')
 from cassiopeia import set_riot_api_key
 from numpy import NaN
 from sortedcontainers import SortedList
-from src.match_data.params import riot_params
+from lol_matchmaking.match_data.params import riot_params
 from cassiopeia.core import Match
-from src.match_data.summoner_stats import get_summoner_historical_features, get_summoner_winrate, get_summoner_rank
+from lol_matchmaking.match_data.summoner_stats import get_summoner_historical_features, get_summoner_winrate, get_summoner_rank
 
 
 def is_participant_autofill(position, team_position_frequency):

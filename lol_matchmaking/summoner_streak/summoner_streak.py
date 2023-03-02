@@ -1,13 +1,11 @@
-import sys
-sys.path.insert(0, '')
 import pickle
 import pandas as pd
 import numpy as np
 from cassiopeia import set_riot_api_key, Patch
 from cassiopeia.core import Summoner
-from src.match_data.match_stats import winning_team
-from src.match_data.params import riot_params
-from src.match_data.summoner_stats import get_summoner_match_history, get_summoner_rank, get_summoner_winrate
+from lol_matchmaking.match_data.match_stats import winning_team
+from lol_matchmaking.match_data.params import riot_params
+from lol_matchmaking.match_data.summoner_stats import get_summoner_match_history, get_summoner_rank, get_summoner_winrate
 
 
 def features_low(match, summoner):

@@ -1,12 +1,10 @@
-import sys
-sys.path.insert(0, '')
 import datetime
 from cassiopeia import set_riot_api_key, Patch, Queue
 from numpy import NaN
 from sortedcontainers import SortedList
-from src.match_data.params import riot_params
+from lol_matchmaking.match_data.params import riot_params
 from cassiopeia.core import Summoner, MatchHistory
-from src.utils import RomanNumeralToDecimal, team_position_frequency
+from lol_matchmaking.utils import RomanNumeralToDecimal, team_position_frequency
 import arrow
 
 
