@@ -11,25 +11,12 @@ import csv
 
 
 def first_line():
+    attributes = ['rank', 'winrate', 'mean_kda', 'mean_gpm', 'mean_cs', 'autofill']
     first_line = 'match_id'
-    for i in range(1, 11):
-        rank = 'rank_player_' + str(i) + ','
-        first_line += rank
-    for i in range(1, 11):
-        winrate = 'winrate_player_' + str(i) + ','
-        first_line += winrate
-    for i in range(1, 11):
-        mean_kda = 'mean_kda_player_' + str(i) + ','
-        first_line += mean_kda
-    for i in range(1, 11):
-        mean_gpm = 'mean_gpm_player_' + str(i) + ','
-        first_line += mean_gpm
-    for i in range(1, 11):
-        mean_cs = 'mean_cs_player_' + str(i) + ','
-        first_line += mean_cs    
-    for i in range(1, 11):
-        autofill = 'autofill_player_' + str(i) + ','
-        first_line += autofill
+    for attribute in attributes:
+        for i in range(1, 11):
+            player_attribute = f'{attribute}_player_{i},'
+            first_line += player_attribute
     first_line += 'win'
     return first_line
 
